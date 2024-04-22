@@ -3,6 +3,7 @@ package com.hommies.linkgeneratorsystem.service.impl;
 import com.hommies.linkgeneratorsystem.dtos.ApiResponse;
 import com.hommies.linkgeneratorsystem.dtos.MerchantDTO;
 import com.hommies.linkgeneratorsystem.dtos.OnboardMerchantRequest;
+import com.hommies.linkgeneratorsystem.dtos.OnboardingResponse;
 import com.hommies.linkgeneratorsystem.exceptions.CompanyAlreadyExistException;
 import com.hommies.linkgeneratorsystem.exceptions.CompanyNotExistException;
 import com.hommies.linkgeneratorsystem.model.Merchant;
@@ -26,7 +27,7 @@ public class MerchantServiceImpl implements MerchantService {
 
     private final MerchantRepository merchantRepository;
     @Override
-    public ApiResponse<String> OnboardMerchant(OnboardMerchantRequest request) {
+    public ApiResponse<OnboardingResponse> OnboardMerchant(OnboardMerchantRequest request) {
 
     log.info("Onboarding merchant request {}", request);
     var merchant = merchantRepository.findByMerchantCode(request.getMerchantCode().toUpperCase());
@@ -44,8 +45,12 @@ public class MerchantServiceImpl implements MerchantService {
             .build();
 
    var response =  merchantRepository.save(newMerchant);
+   var result = OnboardingResponse.builder()
+                        .merchantCode(request.getMerchantCode())
+                        .companyName(response.getCompanyName())
+                   .build();
         log.info("merchant saved successfully");
-    return new  ApiResponse<>(HttpStatus.CREATED, "Merchant Successfully Onboarded!", response.getMerchantCode());
+    return new  ApiResponse<>(HttpStatus.CREATED, "Merchant Successfully Onboarded!", result);
 
 
     }

@@ -4,6 +4,7 @@ package com.hommies.linkgeneratorsystem.controller;
 import com.hommies.linkgeneratorsystem.dtos.ApiResponse;
 import com.hommies.linkgeneratorsystem.dtos.MerchantDTO;
 import com.hommies.linkgeneratorsystem.dtos.OnboardMerchantRequest;
+import com.hommies.linkgeneratorsystem.dtos.OnboardingResponse;
 import com.hommies.linkgeneratorsystem.model.Merchant;
 import com.hommies.linkgeneratorsystem.service.MerchantService;
 import jakarta.validation.Valid;
@@ -23,7 +24,7 @@ public class MerchantController {
 
     @PostMapping("/onboard")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<ApiResponse<String>> onboardMerchant(@RequestBody @Valid OnboardMerchantRequest request){
+    public ResponseEntity<ApiResponse<OnboardingResponse>> onboardMerchant(@RequestBody @Valid OnboardMerchantRequest request){
         return new ResponseEntity<>(merchantService.OnboardMerchant(request),HttpStatus.CREATED);
 
     }

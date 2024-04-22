@@ -63,7 +63,6 @@ public class InvoiceServiceImpl  implements InvoiceService {
         var invoice = Invoice.builder()
                 .merchantCode(request.getMerchantCode().toUpperCase())
                 .customerName(request.getCustomerName().toUpperCase())
-//                .items(request.getItems())
                 .invoiceReference(utils.generateInvoiceReference(request.getMerchantCode()))
                 .createdAt(LocalDateTime.now())
                  .totalPrice(new BigDecimal(totalPrice))
